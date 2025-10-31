@@ -1,157 +1,62 @@
-import { View, Text, StyleSheet, ImageBackground, Image } from "react-native";
-import ShareButton from "components/button/share.button";
-import { APP_COLOR } from "utils/constant";
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import bg from '@/assets/auth/welcome-background.png';
-import fbLogo from '@/assets/auth/facebook.png';
-import ggLogo from '@/assets/auth/google.png';
-import React from "react";
-import { LinearGradient } from "expo-linear-gradient";
 import TextBetweenLine from "@/components/button/text.between.line";
+import { Link, Redirect, router } from "expo-router";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAccountAPI } from "@/utils/api";
+import { useCurrentApp } from "@/context/app.context";
+import { useEffect, useState } from "react";
+import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: 10
-    },
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
-    welcomeText: {
-        flex: 0.6,
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        paddingLeft: 20,
-    },
+const RootPage = () => {
 
-    welcomeBtn: {
-        flex: 0.4,
-        gap: 30,
-    },
+    const { setAppState } = useCurrentApp();
+    const [state, setState] = useState<any>();
 
-    heading: {
-        fontSize: 40,
-        fontWeight: "600",
-    },
+    useEffect(() => {
+        async function prepare() {
+            try {
+                // Pre-load fonts, make any API calls you need to do here
+                const res = await getAccountAPI();
 
-    body: {
-        fontSize: 30,
-        color: APP_COLOR.ORANGE,
-        marginVertical: 10,
-    },
+                if (res.data) {
+                    //success
+                    setAppState({
+                        user: res.data.user,
+                        access_token: await AsyncStorage.getItem("access_token")
+                    })
+                    router.replace("/(tabs)")
+                } else {
+                    router.replace("/(auth)/welcome")
+                }
+            } catch (e) {
+                // console.log("Khong the ket noi toi API Backend")
+                // console.warn(e);
+                setState(() => {
+                    throw new Error("Khong the ket noi toi API Backend")
+                });
+            } finally {
+                // Tell the application to render
+                await SplashScreen.hideAsync();
+            }
+        }
 
-    footer: {
+        prepare();
+    }, []);
 
-    },
+    // if (true) {
+    //     return (
+    //         <Redirect href={"/(tabs)"} />
+    //     )
+    // }
 
-})
-
-const WelcomePage = () => {
     return (
-        <ImageBackground
-            style={{ flex: 1 }}
-            source={bg}
-        >
-            <LinearGradient
-                style={{ flex: 1 }}
-                colors={['transparent', '#191B2F']}
-                locations={[0.2, 0.8]}
-
-            >
-                <View style={styles.container}>
-                    <View style={styles.welcomeText}>
-                        <Text style={styles.heading}>
-                            Welcome to
-                        </Text>
-                        <Text style={styles.body}>
-                            Dubai - Food
-                        </Text>
-                        <Text style={styles.footer}>
-                            Nền tảng đặt món ăn hàng đầu tại Dubai
-                        </Text>
-                    </View>
-
-                    <View style={styles.welcomeBtn}>
-                        <TextBetweenLine title="Đăng nhập với" />
-
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            gap: 30,
-                        }}>
-                            <ShareButton
-                                tittle="facebook"
-                                onPress={() => { alert("Đăng nhập với Facebook") }}
-                                textStyle={{ textTransform: 'uppercase' }}
-                                btnStyle={{
-                                    backgroundColor: '#fff',
-                                    justifyContent: 'center',
-                                    borderRadius: 30,
-
-                                }}
-                                icons={
-                                    <Image source={fbLogo} />
-                                }
-                            />
-
-                            <ShareButton
-                                tittle="google"
-                                onPress={() => { alert("Đăng nhập với Google") }}
-                                textStyle={{ textTransform: 'uppercase' }}
-                                btnStyle={{
-                                    backgroundColor: '#fff',
-                                    justifyContent: 'center',
-                                    borderRadius: 30,
-                                    paddingHorizontal: 20,
-                                }}
-                                icons={
-                                    <Image source={ggLogo} />
-                                }
-                            />
-                        </View>
-
-                        <View>
-                            <ShareButton
-                                tittle="Đăng nhập với email"
-                                onPress={() => { alert("Đăng nhập với email") }}
-                                textStyle={{
-                                    color: '#fff',
-                                    paddingVertical: 5
-                                }}
-                                btnStyle={{
-                                    backgroundColor: '#2c2c2c',
-                                    justifyContent: 'center',
-                                    borderRadius: 30,
-                                    marginHorizontal: 50,
-                                    paddingVertical: 10,
-                                    borderColor: '#505050',
-                                    borderWidth: 1,
-                                }}
-                                pressStyle={{ alignSelf: 'stretch' }}
-                            />
-                        </View>
-
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            gap: 10,
-                        }}>
-                            <Text style={{
-                                color: '#fff',
-                            }}>
-                                Chưa có tài khoản? 
-                            </Text>
-
-                            <Text style={{
-                               textDecorationLine: 'underline',
-                                color: '#fff',
-                            }}>
-                                Đăng ký
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-            </LinearGradient>
-        </ImageBackground>
+        <>
+        
+        </>
     );
 };
 
-export default WelcomePage;
+export default RootPage;

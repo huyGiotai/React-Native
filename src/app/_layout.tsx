@@ -1,24 +1,95 @@
-import { Slot, Stack } from "expo-router";
-import { View, Text } from "react-native";
+import AppProvider from "context/app.context";
+import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import { ErrorBoundaryProps, Stack } from "expo-router";
+import { View, Text, Button } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { RootSiblingParent } from 'react-native-root-siblings';
+import { SafeAreaView } from "react-native-safe-area-context";
+
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
+    return (
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={{ flex: 1, paddingHorizontal: 10, gap: 15 }}>
+                <View style={{
+                    backgroundColor: "#333", padding: 10,
+                    borderRadius: 3, gap: 10
+                }}>
+                    <Text style={{ color: "red", fontSize: 20 }}>
+                        Something went wrong
+                    </Text>
+                    <Text style={{ color: "#fff" }}>{error.message}</Text>
+                </View>
+                <Button title="Try Again ?" onPress={retry} />
+            </View>
+        </SafeAreaView>
+
+
+    )
+}
 
 const RootLayout = () => {
-    return (
-        // <View style={{ paddingTop: 50 }}>
-        //     <Text>Header</Text>
-        //     <Slot />
-        //     <Text>Footer</Text>
-        // </View>
-        <Stack>
-            <Stack.Screen
-                name="index"
-                options={{headerShown: false}}
-            />
+    const navTheme = {
+        ...DefaultTheme,
+        colors: {
+            ...DefaultTheme.colors,
+            background: 'transparent',
+        },
+    }
 
-            <Stack.Screen
-                name="(tabs)"
-                options={{headerTitle: "Trang chu"}}
-            />
-        </Stack>
+    return (
+        <GestureHandlerRootView>
+            <RootSiblingParent>
+                <AppProvider>
+                    {/* <SafeAreaView style={{ flex: 1 }}> */}
+                    <ThemeProvider value={navTheme}>
+                        <Stack>
+                            <Stack.Screen
+                                name="index"
+                                options={{ headerShown: false }}
+                            />
+
+                            <Stack.Screen
+                                name="(auth)/signup"
+                                options={{ headerShown: false }}
+                            />
+
+                            <Stack.Screen
+                                name="(auth)/verify"
+                                options={{ headerShown: false }}
+                            />
+
+                            <Stack.Screen
+                                name="(auth)/login"
+                                options={{ headerShown: false }}
+                            />
+
+
+                            <Stack.Screen
+                                name="(tabs)"
+                                options={{ headerShown: false }}
+                            />
+
+                            <Stack.Screen
+                                name="(auth)/welcome"
+                                options={{ headerShown: false }}
+                            />
+
+                            <Stack.Screen
+                                name="(user)/product/[id]"
+                                options={{ headerShown: false }}
+                            />
+
+                            <Stack.Screen
+                                name="(user)/account/info"
+                                options={{ headerTitle: "Cập nhật thông tin" }}
+                            />
+                        </Stack>
+                    </ThemeProvider>
+                    {/* </SafeAreaView> */}
+                </AppProvider>
+            </RootSiblingParent>
+        </GestureHandlerRootView>
     )
+
 };
 export default RootLayout;

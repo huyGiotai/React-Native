@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet, Pressable, StyleProp, TextStyle } from "react-native"
+import { View, Text, StyleSheet, Pressable, StyleProp, TextStyle, ActivityIndicator } from "react-native"
 import Entypo from '@expo/vector-icons/Entypo';
 import { ReactNode } from "react";
 import { APP_COLOR } from "utils/constant";
 
 const styles = StyleSheet.create({
     btnContainer: {
-      
+
         borderRadius: 10,
         paddingHorizontal: 15,
         paddingVertical: 10,
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 
     text: {
         textTransform: 'uppercase',
-        
+
     }
 })
 
@@ -30,24 +30,32 @@ interface IProps {
     pressStyle?: StyleProp<TextStyle>;
     btnStyle?: StyleProp<TextStyle>;
     icons?: ReactNode,
+    loading?: boolean;
 }
 
 const ShareButton = (props: IProps) => {
     const { tittle, onPress, textStyle,
-         pressStyle, btnStyle, icons } = props;
+        pressStyle, btnStyle,
+        icons, loading = false
+    } = props;
     return (
         <Pressable
+            disabled={loading}
             style={({ pressed }) => ([{
                 alignSelf: 'flex-start',
-                opacity: pressed ? 0.5 : 1
+                opacity: pressed === true || loading ? 0.5 : 1
             }, pressStyle])}
             onPress={onPress}
         >
             <View style={[styles.btnContainer, btnStyle]}>
+                {loading && <ActivityIndicator 
+                    color={"black"}
+                />}
+
                 {icons}
 
                 <Text
-                    style={ textStyle}>
+                    style={textStyle}>
                     {tittle}
                 </Text>
             </View>
