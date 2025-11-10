@@ -1,6 +1,6 @@
 import { APP_COLOR } from "@/utils/constant";
 import { useState } from "react";
-import { View, Text, StyleSheet, TextInput, KeyboardTypeOptions } from "react-native";
+import { View, Text, StyleSheet, TextInput, KeyboardTypeOptions, Platform } from "react-native";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 const styles = StyleSheet.create({
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     input: {
         borderWidth: 1,
         paddingHorizontal: 15,
-        paddingVertical: 10,
+        paddingVertical: Platform.OS === "android" ? 10 : 15,
         borderRadius: 10,
     },
 
@@ -36,7 +36,7 @@ interface IProps {
     error?: any;
     touched?: any;
     editable?: any;
-   
+
 }
 
 const ShareInput = (props: IProps) => {
@@ -53,7 +53,7 @@ const ShareInput = (props: IProps) => {
             </Text>}
             <View>
                 <TextInput
-                    
+
                     editable={editable}
                     value={value}
                     onChangeText={onChangeText}

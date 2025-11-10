@@ -73,7 +73,7 @@ const RootLayout = () => {
                                 options={{ headerShown: false }}
                             />
 
-                             <Stack.Screen
+                            <Stack.Screen
                                 name="(auth)/search"
                                 options={{ headerShown: false }}
                             />
@@ -100,7 +100,10 @@ const RootLayout = () => {
 
                             <Stack.Screen
                                 name="(user)/account/info"
-                                options={{ headerTitle: "Cập nhật thông tin" }}
+                                options={{
+                                    headerTitle: "Cập nhật thông tin",
+                                    headerBackTitle: "back",
+                                }}
                             />
 
                             <Stack.Screen
@@ -132,12 +135,17 @@ const RootLayout = () => {
 
                             <Stack.Screen
                                 name="(user)/product/place.order"
-                                options={{ headerTitle: "Xác nhận đơn hàng" }}
+                                options={{
+                                    headerTitle: "Xác nhận đơn hàng",
+                                    headerBackTitle: "back",
+                                }}
                             />
 
                             <Stack.Screen
                                 name="(user)/account/password"
-                                options={{ headerTitle: "Cập nhật mật khẩu" }}
+                                options={{ 
+                                    headerBackTitle: "back",
+                                    headerTitle: "Cập nhật mật khẩu" }}
                             />
 
                             <Stack.Screen

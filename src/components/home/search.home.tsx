@@ -1,5 +1,5 @@
 import { APP_COLOR } from "@/utils/constant";
-import { Pressable, StyleSheet, Text, View } from "react-native"
+import { Pressable, StyleSheet, Text, View, Platform } from "react-native"
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import { router } from "expo-router";
 
@@ -9,9 +9,8 @@ const styles = StyleSheet.create({
         gap: 5,
         flexDirection: "row",
         margin: 5,
-        marginTop: 40,
         paddingHorizontal: 3,
-        paddingVertical: 7,
+        paddingVertical: Platform.OS === "android" ? 7 : 10,
         borderRadius: 3
     }
 })

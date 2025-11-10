@@ -10,14 +10,14 @@ const styles = StyleSheet.create({
     location: {
         flexDirection: 'row',
         alignItems: 'flex-end',
-       
+
     }
 })
 
 const HeaderHome = () => {
     return (
         <View style={styles.container}>
-            <Text style={{ paddingLeft: 5, marginTop: 50 }}>Giao đến:</Text>
+            <Text style={{ paddingLeft: 5 }}>Giao đến:</Text>
             <View style={styles.location}>
                 <Entypo
                     name="location-pin"

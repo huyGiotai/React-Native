@@ -15,7 +15,7 @@ const RestaurantsPage = () => {
     const [searchTerm, setSearchTerm] = useState<string>("");
 
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [pageSize, setPageSize] = useState<number>(8);
+    const [pageSize, setPageSize] = useState<number>(5);
 
     useEffect(() => {
         const fetchInitData = async () => {
@@ -39,7 +39,8 @@ const RestaurantsPage = () => {
             fetchData();
         }
     }, [currentPage])
-   const handleSearch = debounce(async (text: string) => {
+
+    const handleSearch = debounce(async (text: string) => {
         setSearchTerm(text);
         if (!text) return;
 
@@ -80,7 +81,6 @@ const RestaurantsPage = () => {
             </View>
             <View style={{ flex: 1 }}>
                 <FlatList
-                    showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.5}
                     onEndReached={handleEndReached}
                     data={restaurants}
@@ -101,7 +101,7 @@ const RestaurantsPage = () => {
                             }}>
                             <Image
                                 source={{ uri: `${getUrlBaseBackend()}/images/restaurant/${item.image}` }}
-                                style={{ height: 80, width: 80 }}
+                                style={{ height: 100, width: 100 }}
                             />
                             <Text>{item.name}</Text>
                         </Pressable>
