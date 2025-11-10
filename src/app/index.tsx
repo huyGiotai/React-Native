@@ -6,6 +6,8 @@ import { useCurrentApp } from "@/context/app.context";
 import { useEffect, useState } from "react";
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { useFonts } from "expo-font";
+import { APP_FONT } from "@/utils/constant";
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -14,6 +16,10 @@ const RootPage = () => {
 
     const { setAppState } = useCurrentApp();
     const [state, setState] = useState<any>();
+
+    const [loaded, error] = useFonts({
+        [APP_FONT]: require('@/assets/font/OpenSans-Regular.ttf'),
+    });
 
     useEffect(() => {
         async function prepare() {
@@ -54,7 +60,7 @@ const RootPage = () => {
 
     return (
         <>
-        
+
         </>
     );
 };

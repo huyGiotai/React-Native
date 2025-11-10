@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     location: {
         flexDirection: 'row',
         alignItems: 'flex-end',
+       
     }
 })
 
@@ -22,7 +23,7 @@ const HeaderHome = () => {
                     name="location-pin"
                     size={20}
                     color={APP_COLOR.ORANGE} />
-                <Text>81 Hẻm 8/11/186 Lê Quang Đạo</Text>
+                <Text >81 Hẻm 8/11/186 Lê Quang Đạo</Text>
             </View>
         </View>
     )

@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, FlatList, StyleSheet, Image } from "react-native";
 import BannerHome from "./banner.home";
+import { APP_FONT } from "@/utils/constant";
 
 const styles = StyleSheet.create({
     topList: {
@@ -62,7 +63,13 @@ const TopListHome = () => {
                                     source={item.source}
 
                                 />
-                                <Text style={{ textAlign: 'center', marginTop: 5 }}>{item.name}</Text>
+                                <Text style={{
+                                    textAlign: 'center',
+                                    marginTop: 5,
+                                    fontFamily: APP_FONT
+                                }}>
+                                    {item.name}
+                                </Text>
                             </View>
                         )
                     }}

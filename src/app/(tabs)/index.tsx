@@ -3,8 +3,10 @@ import CollectionHome from "@/components/home/collection.home";
 import HeaderHome from "@/components/home/header.home";
 import SearchHome from "@/components/home/search.home";
 import TopListHome from "@/components/home/top.list.home";
-import { useCurrentApp } from "@/context/app.context";
-import { View, Text, StyleSheet, ScrollView, FlatList, SafeAreaView, Button } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
+
 
 const data = [
     {
@@ -29,6 +31,18 @@ const data = [
 
 
 const HomeTab = () => {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (!mounted) return;
+        setTimeout(() => {
+            router.push("/(auth)/popup.sale")
+        }, 1000)
+    }, [mounted])
 
     return (
         <>

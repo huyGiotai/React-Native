@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { getTopRestaurants } from "@/utils/api";
 import { router } from "expo-router";
 import ContentLoader, { Rect, Circle, Path } from "react-content-loader/native"
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
 const { height: sHeight, width: sWidth } = Dimensions.get('window');
 
 interface IProps {
@@ -38,7 +40,7 @@ const CollectionHome = (props: IProps) => {
         { key: 5, image: demo, name: "cua hang 5" },
     ]
 
-    const [restaurants, setRestaurants] = useState<ITopRestaurants[]>([])
+    const [restaurants, setRestaurants] = useState<ITopRestaurant[]>([])
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -67,7 +69,11 @@ const CollectionHome = (props: IProps) => {
             {loading == false
                 ?
                 <View style={styles.container}>
-                    <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
+                    <View style={{
+                        justifyContent: "space-between",
+                        flexDirection: "row",
+                        alignItems: "center"
+                    }}>
                         <Text
                             style={{
                                 color: APP_COLOR.ORANGE,
@@ -75,7 +81,20 @@ const CollectionHome = (props: IProps) => {
                                 fontWeight: "600",
                             }}
                         >{name}</Text>
-                        <Text style={{ color: "#5a5a5a" }}>Xem tất cả</Text>
+                        <Pressable
+                            onPress={() => router.navigate("/(auth)/restaurants")}
+                            style={{
+                                flexDirection: "row",
+                                alignItems: "center"
+                            }}>
+                            <Text style={{ color: "#5a5a5a" }}>
+                                Xem tất cả
+                            </Text>
+                            <MaterialIcons
+                                style={{ marginTop: 3 }}
+                                name="navigate-next" size={20} color="grey" />
+                        </Pressable>
+
                     </View>
 
                     <View style={{ marginVertical: 5 }}>

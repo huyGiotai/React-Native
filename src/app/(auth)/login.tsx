@@ -64,7 +64,7 @@ const LoginPage = () => {
                 initialValues={{ email: '', password: '' }}
                 onSubmit={values => handleLogin(values.email, values.password)}
             >
-                {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+                {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                     <View style={styles.container}>
                         <View>
                             <Text style={{
@@ -81,6 +81,7 @@ const LoginPage = () => {
                             onBlur={handleBlur('email')}
                             value={values.email}
                             error={errors.email}
+                            touched={touched.email}
                         />
 
                         <ShareInput
@@ -90,9 +91,18 @@ const LoginPage = () => {
                             onBlur={handleBlur('password')}
                             value={values.password}
                             error={errors.password}
+                            touched={touched.password}
                         />
 
-                        <View style={{ marginVertical: 10 }}></View>
+                        <View style={{ marginVertical: 10 }}>
+                            <Text
+                                onPress={() => router.navigate("/(auth)/request.password")}
+                                style={{
+                                    textAlign: "center",
+                                    color: APP_COLOR.ORANGE
+                                }}>Quên mật khẩu ?</Text>
+                        </View>
+
                         <ShareButton
                             loading={loading}
                             tittle="Đăng Nhập"
@@ -125,7 +135,7 @@ const LoginPage = () => {
                                 Chưa có tài khoản?
                             </Text>
                             <Link href={"/(auth)/signup"}>
-                                <Text style={{ color: "black", textDecorationLine: 'underline' }}>
+                                <Text style={{ color: APP_COLOR.ORANGE, textDecorationLine: 'underline' }}>
                                     Đăng ký.
                                 </Text>
                             </Link>

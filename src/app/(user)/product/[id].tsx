@@ -4,11 +4,12 @@ import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, Text, Dimensions } from "react-native";
 import ContentLoader, { Rect, Circle, Path } from "react-content-loader/native"
+import { useCurrentApp } from "@/context/app.context";
 const { height: sHeight, width: sWidth } = Dimensions.get('window');
 
 const ProductPage = () => {
     const { id } = useLocalSearchParams();
-    const [restaurant, setRestaurant] = useState<IRestaurants | null>(null);
+    const {restaurant, setRestaurant} = useCurrentApp();
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -29,7 +30,7 @@ const ProductPage = () => {
             {loading === false
                 ?
                 <RMain
-                    restaurant={restaurant}
+                    
                 />
                 :
                 <ContentLoader

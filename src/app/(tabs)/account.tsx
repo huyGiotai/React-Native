@@ -1,11 +1,12 @@
 import { useCurrentApp } from "@/context/app.context";
 import { getUrlBaseBackend } from "@/utils/api";
 import { APP_COLOR } from "@/utils/constant";
-import { View, Text, Image, Pressable, StyleSheet } from "react-native"
+import { View, Text, Image, Pressable, StyleSheet, Alert } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Feather from '@expo/vector-icons/Feather';
 import { router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const styles = StyleSheet.create({
     Pressable_custom: {
@@ -23,6 +24,23 @@ const AccountPage = () => {
     const { appState } = useCurrentApp();
     const baseImage = `${getUrlBaseBackend()}/images/avatar`;
     const insets = useSafeAreaInsets();
+
+    const handleLogout = () => {
+        Alert.alert('Đăng xuất', 'Bạn chắc chắn muốn đăng xuất?', [
+            {
+                text: 'Hủy',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {
+                text: 'Xác nhận',
+                onPress: async () => {
+                    await AsyncStorage.removeItem("access_token");
+                    router.replace("/(auth)/welcome");
+                }
+            },
+        ]);
+    }
 
     return (
         <View style={{ flex: 1 }}>
@@ -62,7 +80,9 @@ const AccountPage = () => {
                 <MaterialIcons name="navigate-next" size={24} color="grey" />
             </Pressable>
 
-            <Pressable style={styles.Pressable_custom}>
+            <Pressable
+                onPress={() => router.navigate("/(user)/account/password")}
+                style={styles.Pressable_custom}>
                 <View style={{
                     flexDirection: "row",
                     gap: 10,
@@ -107,6 +127,7 @@ const AccountPage = () => {
                 paddingBottom: 15
             }}>
                 <Pressable
+                    onPress={handleLogout}
                     style={({ pressed }) => ({
                         opacity: pressed === true ? 0.5 : 1,
                         padding: 10,

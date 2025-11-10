@@ -9,6 +9,7 @@ import { currencyFormatter, getUrlBaseBackend, processDataRestaurantMenu } from 
 import AnDesign from '@expo/vector-icons/AntDesign';
 import ItemQuantity from './order/item.quantity';
 import StickyFooter from './order/sticky.footer';
+import { useCurrentApp } from '@/context/app.context';
 
 
 
@@ -21,12 +22,8 @@ const IMAGE_HEIGHT = 220;
 const INFO_HEIGHT = 250;
 const SLIDE_MENU_HEIGHT = 50;
 
-interface IProps {
-    restaurant: IRestaurants | null;
-}
-
-const RMain = (props: IProps) => {
-    const { restaurant } = props;
+const RMain = () => {
+    const { restaurant } = useCurrentApp();
     const scrollY = useSharedValue(0);
 
     const sectionListRef = useRef<SectionList>(null);
@@ -146,7 +143,7 @@ const RMain = (props: IProps) => {
     }).current;
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <StickyHeader
                 headerHeight={HEADER_HEIGHT}
                 imageHeight={IMAGE_HEIGHT}
@@ -224,6 +221,7 @@ const RMain = (props: IProps) => {
                         <ItemQuantity
                             menuItem={menuItem}
                             restaurant={restaurant}
+                            isModal={false}
                         />
                     )
                 }

@@ -29,7 +29,7 @@ export const getAccountAPI = () => {
 
 export const getTopRestaurants = (ref: string) => {
     const url = `/api/v1/restaurants/${ref}`;
-    return axios.post<IBackendRes<ITopRestaurants[]>>(url,{}, {
+    return axios.post<IBackendRes<ITopRestaurant[]>>(url, {}, {
         headers: { delay: 1000 }
     });
 }
@@ -60,6 +60,51 @@ export const processDataRestaurantMenu = (restaurant: IRestaurants | null) => {
     })
 }
 
+export const placeOrderAPI = (data: any) => {
+    const url = `/api/v1/orders`;
+    return axios.post<IBackendRes<IUserLogin>>(url, { ...data });
+}
+
+export const getOrderHistoryAPI = () => {
+    const url = `/api/v1/orders`;
+    return axios.get<IBackendRes<IOrderHistory[]>>(url);
+}
+
+export const updateUserAPI = (_id: string, name: string, phone: string) => {
+    const url = `/api/v1/users`;
+    return axios.patch<IBackendRes<IUserLogin>>(url, { _id, name, phone });
+}
+
+export const updateUserPasswordAPI = (
+    currentPassword: string,
+    newPassword: string,
+) => {
+    const url = `/api/v1/users/password`;
+    return axios.post<IBackendRes<IUserLogin>>(url, { currentPassword, newPassword });
+}
+
+export const requestPasswordAPI = (email: string) => {
+    const url = `/api/v1/auth/retry-password`;
+    return axios.post<IBackendRes<IUserLogin>>(url, { email });
+}
+
+export const forgotPasswordAPI = (code: string, email: string, password: string) => {
+    const url = `/api/v1/auth/forgot-password`;
+    return axios.post<IBackendRes<IUserLogin>>(url, { code, email, password });
+}
+
+export const likeRestaurantAPI = (restaurant: string, quantity: number) => {
+    const url = `/api/v1/likes`;
+    return axios.post<IBackendRes<IUserLogin>>(url, { restaurant, quantity });
+}
+
+
+export const getFavoriteRestaurantAPI = () => {
+    const url = `/api/v1/likes?current=1&pageSize=10`;
+    return axios.get<IBackendRes<IRestaurants[]>>(url);
+}
+
+
 export const currencyFormatter = (value: any) => {
     const options = {
         significantDigits: 2,
@@ -78,8 +123,6 @@ export const currencyFormatter = (value: any) => {
     )} ${options.symbol}`
 }
 
-
-
 export const printAsyncStorage = () => {
     AsyncStorage.getAllKeys((err, keys) => {
         AsyncStorage.multiGet(keys!, (error, stores) => {
@@ -91,3 +134,13 @@ export const printAsyncStorage = () => {
         });
     });
 };
+
+export const getRestaurantByNameAPI = (name: string) => {
+    const url = `/api/v1/restaurants?current=1&pageSize=10&name=/${name}/i`;
+    return axios.get<IBackendRes<IModelPaginate<IRestaurants>>>(url);
+};
+
+export const filterRestaurantAPI = (query: string) => {
+    const url = `/api/v1/restaurants?${query}`;
+    return axios.get<IBackendRes<IModelPaginate<IRestaurants>>>(url);
+}

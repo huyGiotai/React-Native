@@ -5,6 +5,7 @@ import { View, Text, Button } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { SafeAreaView } from "react-native-safe-area-context";
+import { APP_COLOR } from "@/utils/constant";
 
 export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
     return (
@@ -32,7 +33,7 @@ const RootLayout = () => {
         ...DefaultTheme,
         colors: {
             ...DefaultTheme.colors,
-            background: 'transparent',
+            background: 'white',
         },
     }
 
@@ -42,7 +43,16 @@ const RootLayout = () => {
                 <AppProvider>
                     {/* <SafeAreaView style={{ flex: 1 }}> */}
                     <ThemeProvider value={navTheme}>
-                        <Stack>
+                        <Stack
+                            screenOptions={
+                                {
+                                    headerTintColor: APP_COLOR.ORANGE,
+                                    headerTitleStyle: {
+                                        color: "black"
+                                    },
+                                }
+                            }
+                        >
                             <Stack.Screen
                                 name="index"
                                 options={{ headerShown: false }}
@@ -63,6 +73,15 @@ const RootLayout = () => {
                                 options={{ headerShown: false }}
                             />
 
+                             <Stack.Screen
+                                name="(auth)/search"
+                                options={{ headerShown: false }}
+                            />
+
+                            <Stack.Screen
+                                name="(auth)/restaurants"
+                                options={{ headerShown: false }}
+                            />
 
                             <Stack.Screen
                                 name="(tabs)"
@@ -82,6 +101,52 @@ const RootLayout = () => {
                             <Stack.Screen
                                 name="(user)/account/info"
                                 options={{ headerTitle: "Cập nhật thông tin" }}
+                            />
+
+                            <Stack.Screen
+                                name="(user)/product/create.modal"
+                                options={{
+                                    headerShown: false,
+                                    presentation: "transparentModal",
+                                    animation: "fade"
+                                }}
+                            />
+
+                            <Stack.Screen
+                                name="(user)/product/update.modal"
+                                options={{
+                                    headerShown: false,
+                                    animation: "fade",
+                                    presentation: "transparentModal",
+                                }}
+                            />
+
+                            <Stack.Screen
+                                name="(auth)/popup.sale"
+                                options={{
+                                    headerShown: false,
+                                    animation: "fade",
+                                    presentation: "transparentModal",
+                                }}
+                            />
+
+                            <Stack.Screen
+                                name="(user)/product/place.order"
+                                options={{ headerTitle: "Xác nhận đơn hàng" }}
+                            />
+
+                            <Stack.Screen
+                                name="(user)/account/password"
+                                options={{ headerTitle: "Cập nhật mật khẩu" }}
+                            />
+
+                            <Stack.Screen
+                                name="(auth)/request.password"
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name="(auth)/forgot.password"
+                                options={{ headerShown: false }}
                             />
                         </Stack>
                     </ThemeProvider>
