@@ -4,7 +4,8 @@ import Entypo from '@expo/vector-icons/Entypo';
 const styles = StyleSheet.create({
     container: {
         paddingTop: 5,
-        gap: 3
+        gap: 3,
+        marginTop: 40
     },
 
     location: {
